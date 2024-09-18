@@ -37,6 +37,32 @@ ggsave("flipper_and_bill_scatterplot.png",plot = flipper_bill_plot)
 ## Problem 2
 
 ```{r}
+(random_df = tibble(
+  ran_numeric = rnorm(10),
+  ran_logical = ran_numeric >0,
+  ran_chara = c("ab","cd","ef","gh","ij","kl","mn","op","qr","st"),
+  ran_factor = factor(c("low","med","high","low","med",
+                        "high","med","high","med","high"))
+))
+(mean_for_numeric = mean(pull(random_df,ran_numeric)))
+(mean_for_logical = mean(pull(random_df,ran_logical)))
+(mean_for_chara = mean(pull(random_df,ran_chara)))
+(mean_for_factor = mean(pull(random_df,ran_factor)))
+```
+The mean function works for numerical variable and logical vector; but not working for character vector and factor vector.\
+
+```{r eval = FALSE}
+(ran_log_numeric = as.numeric(pull(random_df,ran_logical)))
+(ran_chara_numeric = as.numeric(pull(random_df,ran_chara)))
+(ran_factor_numeric = as.numeric(pull(random_df,ran_factor)))
 
 ```
+When we apply `as.numeric` to logical, character and factor variables, we can see:\
+logical variable becomes 0 and 1(0 representing FALSE and 1 representing TRUE);\
+character variable coerced to be NA;\
+and factor variable becomes 1,2 and 3, each stands for one level. \
+The reason behind this might be: \
+for logical variable, the answer can only be `TRUE` or `FALSE`, we can transfer them to be 0 and 1 representing the chance of issue happened. This also explains why we can take mean of logical variable, it is just showing the proportion of True value.\
+for character variable, it can be anything: a sentence, a word or even a paragraph, it cannot be directly converted into numerical variable unless it is just number with quotation mark. Accordingly, it explains why we cannot take mean of character variable.\
+for factor variable, we can use `as.numeric` to transfer factor variable to numerical variable, because it is actually `1` stands for `level1`, `2` stands for `level2` ... But we cannot take mean of it. Because for here, numerical values are not simply a number, it has its internal meanings, we are just using a simply way to represent factor variable. This explains what happened when we take the mean value. 
 
