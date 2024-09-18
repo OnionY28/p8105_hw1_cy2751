@@ -7,5 +7,36 @@ output: github_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+## Problem 1
+```{r}
+data("penguins",package = "palmerpenguins")
+```
+
+In the `penguins` dataset, we have `r ncol(penguins)` variables in total (`r ncol(penguins)` columns).\
+They are:`species`,`island`,`billing length` in mm,`bill depth` in mm,`flipper length` in mm, `body mass` in g, `sex` and `year`. \
+In variable `species`, we have three categories: `Adelie`,`Chinstrap` and `Gentoo`. \
+For variable `island`, we also have three categories:`Biscoe`,`Dream` and `Torgersen`.\
+This dataset consists of information from `r nrow(penguins)` samples (`r nrow(penguins)` rows).\
+The mean flipper length is `r mean(pull(penguins, flipper_length_mm), na.rm = TRUE)`.
+
+
+```{r}
+(flipper_bill_plot = 
+  ggplot(data = penguins,
+       mapping = aes(x = bill_length_mm,
+                     y = flipper_length_mm,
+                     colour = species))+
+  geom_point())
+
+ggsave("flipper_and_bill_scatterplot.png",plot = flipper_bill_plot)
+```
+
+## Problem 2
+
+```{r}
+
 ```
 
